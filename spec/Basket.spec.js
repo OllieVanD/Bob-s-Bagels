@@ -45,13 +45,13 @@ console.log(assertEquals(basket.capacity.toString(),expectedOutput));
 console.log("Extended Test");
 basket = new Basket(4);
 
-input = ([[2, 'BGLC'],[12, 'BGLO'], [6, 'BGLE']]);
+input = ([[2, 'BGLO'],[12, 'BGLP'], [6, 'BGLE'], [3, 'COFL']]);
 
 
 
 basket.addNew(input);
 
- console.log(assertEquals(basket.totalPrices(),'38' ));
-
+ console.log(assertEquals(basket.totalPrices(),'10.43' ));
+console.log(basket.totalPrices())
 
 

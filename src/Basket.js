@@ -1,7 +1,3 @@
-// const Bagels = require("./Bagels.js");
-
-require("./Bagels.js");
-
 class Basket {
 
     constructor(capacity) {
@@ -9,13 +5,19 @@ class Basket {
         this.capacity = capacity || 1000;
         this.currentLevel = 0;
         this.totalCost = 0;
-        
+        this.SKU = {BGL : 'bagels', COF : 'coffee'};
+        this.item = {
+            bagels :{ "O": 0.49, "P" : 0.39, "E": 0.49 },
+            coffee :{ "L": 0.99 }
+            }
+        this.offers = {
+            'O' : [6, 2.49],
+            'P' : [12, 3.99],
+            'E' : [6, 2.49],
+            'L' : [1000, 2.49]            
+            }
     }
-   SKU = {BGL : 'bagels', COF : 'Coffee'};
 
-    item = {bagels :{ "O": 2, "C" : 1, "E": 2,
-     }};
-    
     addNew(orders)
     {
         orders.forEach(i => { 
@@ -23,24 +25,29 @@ class Basket {
         let typeOfItem = this.SKU[i[1].split('').splice(0,3).join('').toUpperCase()]; 
         console.log(typeOfItem);
 
-        let typeOfBagel = i[1].split('').splice(3,4).join('').toUpperCase();
+        let typeOfFlavour = i[1].split('').splice(3,4).join('').toUpperCase();
         
         //console.log(typeOfBagel);
-        console.log(this.item[typeOfItem][typeOfBagel]);
-        console.log(i[0]);
-        this.totalCost += (i[0] * this.item[typeOfItem][typeOfBagel]);
-        console.log(this.totalCost);
+        console.log(this.item[typeOfItem][typeOfFlavour]);
+        //console.log(i[0]);
+        this.priceShitUp(i[0],typeOfItem,typeOfFlavour);
+        //console.log(this.totalCost);
         //console.log(this.item);
         //console.log(`typeOfItem: ${typeOfItem}, typeOfBagel: ${typeOfBagel}`);
         //console.log(`totalCost: ${this.totalCost}, eachPrice: ${this.item[typeOfItem[typeOfBagel]]}, i[0]: ${i[0]}`);
         })
-
-
-
-
-
     }
 
+    priceShitUp(quantity, typeOfItem, typeOfFlavour) {
+        console.log(quantity)
+
+        while (quantity >= this.offers[typeOfFlavour][0]) {
+            console.log('hi')
+            this.totalCost += this.offers[typeOfFlavour][1]
+            quantity -= this.offers[typeOfFlavour][0]
+        }
+        this.totalCost += quantity * this.item[typeOfItem][typeOfFlavour];
+    }
 
     add(item){
         for (let i = 0; i<item.length;i++){
